@@ -2,21 +2,20 @@
   <div class="container">
     <div class="card">
       <div class="heading">
-        <h4 class="title">NYTimes Books</h4>
+        <h4>NYTimes Books</h4>
       </div>
       <Categories @category-selected="showCategory"></Categories>
       <div class="search">
         <form action="" v-on:submit.prevent="searchBook">
-          <input type="text" class="form-control" placeholder="Search by title" v-model='bookTitle'/>
-
+          <input id="book-title-input" 
+          type="text" class="form-control" placeholder="Search by title" v-model='bookTitle'/>
+          <button class="btn" type="submit">Search</button>
         </form>
       </div>
-      <div class="content">
-        <ul>
-          <li v-for="(book, index) in booksResult" :key="index">
-            <Book :book="book"></Book>
-          </li>
-        </ul>
+    </div>
+    <div class="content">
+      <div v-for="(book, index) in booksResult" :key="index">
+        <Book :book="book"></Book>
       </div>
     </div>
   </div>
@@ -43,9 +42,8 @@ export default {
         .then(data => {
           this.booksResult = data.results.books.filter(b => b.title.toLowerCase().includes(this.bookTitle.toLowerCase()));
         })
-        .catch(err => {
+        .catch(() => {
           alert("There was an error fetching the books.");
-          console.error(err);
         })
     },
     showCategory(cat) {
@@ -66,47 +64,54 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "../styles/main.scss";
+
 .container {
-  z-index: 1;
   margin: 36px auto;
-  max-width: 826px;
+  width: 100%;
+  min-height: 90vh;
   background-color: white;
+  border-radius: 16px;
 }
 
 .card {
-  box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
   padding: 24px;
+  box-shadow: -1px 3px 21px -2px rgba(0,0,0,0.54);
+  border-radius: 16px;  
+  width: 50%;
+  margin: 0 auto;
+  position: relative;
+  top: 15px;
 }
 
-.list {
-  > li {
-    &:not(:last-child) {
-      margin-bottom: 18px;
-    }
-    > a {
-      color: #0a5b8c;
-      display: block;
-      margin-bottom: 6px;
-    }
-
-    > span {
-      color: rgba(#3b4242, 0.7);
-      font-size: 12px;
-    }
-  }
+h4 {
+  font-size: 35px;
 }
+
+form {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+#book-title-input {
+  width: 60%;
+  min-width: 300px;
+  max-width: 500px;
+  font-size: 20px;
+}
+
 
 .btn {
-  color: #fff;
-  cursor: pointer;
-  background-color: #117a8b;
-  border: 1px solid transparent;
-  padding: 6px 12px;
-  border-radius: 6px;
-  transition: all 0.1s ease-in;
+  border-radius: 10px;
+  border: none;
+  background-color: var(--accentBg);
+  color: #001c31;
+  font-size: 18px;
+  padding: 4px 10px;
+  transition: 0.5s;
   &:hover {
-    background-color: #138496;
-    border-color: #117a8b;
+    background-color: var(--accentBgRed);
   }
 }
 
@@ -130,5 +135,11 @@ export default {
     padding: 6px 0;
     width: 100%;
   }
+}
+
+.content {
+  margin: 50px 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 }
 </style>

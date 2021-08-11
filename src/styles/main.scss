@@ -1,2 +1,14 @@
 @import "reset";
 @import "base";
+
+
+:root {
+    --radius: 6px;
+    --baseFg: rgb(33, 33, 41);
+    --baseBg: white;
+    --orangeBg: rgb(255, 242, 241);
+    --accentFg: #006fc2;
+    --accentBg: rgba(255,130,118,1);
+    --accentBgOrange: rgba(255,102,51,1);
+    --accentBgRed: rgba(225,24,76,1);
+  }
